@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests\Api\LoginRequest;
+use App\Transformers\AdminTransformer;
 
 class LoginController extends Controller
 {
@@ -41,15 +42,20 @@ class LoginController extends Controller
 
     public function update()
     {
-        $token = Auth::guard('api')->refresh();
+        $token = auth('admin')->refresh();
 
         return $this->respondWithToken($token);
     }
 
     public function destroy()
     {
-        Auth::guard('api')->logout();
+        auth('admin')->logout();
 
         return $this->response->noContent();
+    }
+
+    public function me()
+    {
+        return $this->response->item($this->user(), new AdminTransformer());
     }
 }

@@ -45,10 +45,10 @@ $api->version('v1', [
             ->name('api.admin.authorizations.destroy');
 
         // 需要 token 验证的接口
-        $api->group(['middleware' => 'api.auth'], function ($api) {
+        $api->group(['middleware' => 'auth:admin'], function ($api) {
             // 当前登录用户信息
-            $api->get('authorizations/info', 'UsersController@me')
-                ->name('api.user.show');
+            $api->get('authorizations/info', 'LoginController@me')
+                ->name('api.admin.show');
             // 用户注册
             $api->post('users', 'UsersController@store')
                 ->name('api.users.store');
