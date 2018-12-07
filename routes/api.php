@@ -29,6 +29,8 @@ $api->version('v1', [
         // 用户添加
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
+
+
         // 图片验证码
         $api->post('captchas', 'CaptchasController@store')
             ->name('api.captchas.store');
@@ -41,6 +43,16 @@ $api->version('v1', [
         // 删除token
         $api->delete('authorizations/current', 'LoginController@destroy')
             ->name('api.admin.authorizations.destroy');
+
+        // 需要 token 验证的接口
+        $api->group(['middleware' => 'api.auth'], function ($api) {
+            // 当前登录用户信息
+            $api->get('authorizations/info', 'UsersController@me')
+                ->name('api.user.show');
+            // 用户注册
+            $api->post('users', 'UsersController@store')
+                ->name('api.users.store');
+        });
 
     });
 });
