@@ -29,5 +29,18 @@ $api->version('v1', [
         // 用户添加
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
+        // 图片验证码
+        $api->post('captchas', 'CaptchasController@store')
+            ->name('api.captchas.store');
+        // 管理员登录
+        $api->post('authorizations/login', 'LoginController@store')
+            ->name('api.admin.login');
+        // 刷新 token
+        $api->put('authorizations/current', 'LoginController@update')
+            ->name('api.admin.authorizations.update');
+        // 删除token
+        $api->delete('authorizations/current', 'LoginController@destroy')
+            ->name('api.admin.authorizations.destroy');
+
     });
 });
