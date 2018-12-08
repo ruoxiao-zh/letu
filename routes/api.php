@@ -27,9 +27,6 @@ $api->version('v1', [
         // 短信验证码
         $api->post('verificationCodes', 'VerificationCodesController@store')
             ->name('api.verificationCodes.store');
-        // 用户添加
-        $api->post('users', 'UsersController@store')
-            ->name('api.users.store');
 
 
         // 图片验证码
@@ -41,18 +38,21 @@ $api->version('v1', [
         // 刷新 token
         $api->put('authorizations/current', 'LoginController@update')
             ->name('api.admin.authorizations.update');
-        // 删除token
+        // 删除 token
         $api->delete('authorizations/current', 'LoginController@destroy')
             ->name('api.admin.authorizations.destroy');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'auth:admin'], function ($api) {
-            // 当前登录用户信息
-            $api->get('authorizations/info', 'LoginController@me')
+            // 当前登录管理员信息
+            $api->get('authorizations/info', 'AdminController@me')
                 ->name('api.admin.show');
-            // 用户注册
-            $api->post('users', 'UsersController@store')
-                ->name('api.users.store');
+            // 管理员信息修改
+            $api->put('authorizations/info', 'AdminController@update')
+                ->name('api.admin.update');
+            // 添加管理员
+            $api->post('authorizations/info', 'AdminController@store')
+                ->name('api.admin.store');
         });
 
     });

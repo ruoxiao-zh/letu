@@ -53,9 +53,4 @@ class LoginController extends Controller
 
         return $this->response->noContent();
     }
-
-    public function me()
-    {
-        return $this->response->item($this->user(), new AdminTransformer());
-    }
 }
