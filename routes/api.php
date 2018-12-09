@@ -55,5 +55,11 @@ $api->version('v1', [
                 ->name('api.admin.store');
         });
 
+        /**
+         * 公共接口
+         */
+        // 图片上传
+        $api->post('images/upload', 'ImageUploadHandlerController@upload')
+            ->name('api.images.upload');
     });
 });
