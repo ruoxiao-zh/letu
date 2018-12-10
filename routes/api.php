@@ -53,13 +53,35 @@ $api->version('v1', [
             // 添加管理员
             $api->post('authorizations/info', 'AdminController@store')
                 ->name('api.admin.store');
-        });
 
-        /**
-         * 公共接口
-         */
-        // 图片上传
-        $api->post('images/upload', 'ImageUploadHandlerController@upload')
-            ->name('api.images.upload');
+            /**
+             * 模板类型管理
+             */
+            // 添加
+            $api->post('template-types', 'TemplateTypeController@store')
+                ->name('api.template-types.store');
+            // 更新
+            // $api->patch('template-types/{TemplateType}', function ($TemplateType) {
+            //     dd($TemplateType);
+            // });
+            $api->patch('template-types/{templateType}', 'TemplateTypeController@update')
+                ->name('api.template-types.update');
+            // 删除
+            $api->delete('template-types/{templateType}', 'TemplateTypeController@destroy')
+                ->name('api.template-types.destroy');
+            // 列表
+            $api->get('template-types', 'TemplateTypeController@index')
+                ->name('api.template-types.index');
+            // 详情
+            $api->get('template-types/{templateType}', 'TemplateTypeController@show')
+                ->name('api.template-types.show');
+
+            /**
+             * 公共接口
+             */
+            // 图片上传
+            $api->post('images/upload', 'ImageUploadHandlerController@upload')
+                ->name('api.images.upload');
+        });
     });
 });
