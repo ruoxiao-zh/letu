@@ -61,9 +61,6 @@ $api->version('v1', [
             $api->post('template-types', 'TemplateTypeController@store')
                 ->name('api.template-types.store');
             // 更新
-            // $api->patch('template-types/{TemplateType}', function ($TemplateType) {
-            //     dd($TemplateType);
-            // });
             $api->patch('template-types/{templateType}', 'TemplateTypeController@update')
                 ->name('api.template-types.update');
             // 删除
@@ -75,6 +72,25 @@ $api->version('v1', [
             // 详情
             $api->get('template-types/{templateType}', 'TemplateTypeController@show')
                 ->name('api.template-types.show');
+
+            /**
+             * 案例管理
+             */
+            // 添加
+            $api->post('cases', 'CaseController@store')
+                ->name('api.cases.store');
+            // 更新
+            $api->patch('cases/{case}', 'CaseController@update')
+                ->name('api.cases.update');
+            // 删除
+            $api->delete('cases/{case}', 'CaseController@destroy')
+                ->name('api.cases.destroy');
+            // 列表
+            $api->get('cases', 'CaseController@index')
+                ->name('api.cases.index');
+            // 详情
+            $api->get('cases/{case}', 'CaseController@show')
+                ->name('api.cases.show');
 
             /**
              * 公共接口

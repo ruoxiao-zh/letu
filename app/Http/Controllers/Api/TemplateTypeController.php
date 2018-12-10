@@ -43,6 +43,6 @@ class TemplateTypeController extends Controller
 
     public function show(Request $request, TemplateType $templateType)
     {
-        return $this->response->item($templateType->find((int)$request->templateType), new TemplateTypeTransformer());
+        return $this->response->item($templateType->findOrFail((int)$request->templateType), new TemplateTypeTransformer());
     }
 }
