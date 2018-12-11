@@ -17,12 +17,18 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => ['serializer:array', 'cors']
+    'middleware' => [
+        'serializer:array',
+        // 路由模型绑定
+        'bindings',
+        'cors'
+    ]
 ], function ($api) {
     $api->group([
+        // 接口频率限制
         'middleware' => 'api.throttle',
-        'limit' => config('api.rate_limits.sign.limit'),
-        'expires' => config('api.rate_limits.sign.expires'),
+        'limit' => config('api.rate_limits.access.limit'),
+        'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 图片验证码
         $api->post('captchas', 'CaptchasController@store')
@@ -86,6 +92,31 @@ $api->version('v1', [
             // 详情
             $api->get('cases/{case}', 'CaseController@show')
                 ->name('api.cases.show');
+
+            /**
+             * 代理商管理
+             */
+            // 添加
+            $api->post('agents', 'AgentController@store')
+                ->name('api.agents.store');
+            // 更新
+            $api->patch('agents/{agent}', 'AgentController@update')
+                ->name('api.agents.update');
+            // 删除
+            $api->delete('agents/{agent}', 'AgentController@destroy')
+                ->name('api.cases.destroy');
+            // 列表
+            $api->get('agents', 'AgentController@index')
+                ->name('api.agents.index');
+            // 详情
+            $api->get('agents/{agent}', 'AgentController@show')
+                ->name('api.agents.show');
+            // 启用 & 禁用
+            $api->get('agents/{agent}/start-or-forbidden', 'AgentController@startOrForbidden')
+                ->name('api.agents.tart-or-forbidden');
+            // 代理商注册短信验证码
+            $api->post('agents/verification-code', 'AgentController@sendMessage')
+                ->name('api.agents.verificationCodes.store');
 
             /**
              * 公共接口

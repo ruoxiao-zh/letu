@@ -20,15 +20,15 @@ class TemplateTypeController extends Controller
 
     public function update(TemplateTypeRequest $request, TemplateType $templateType)
     {
-        $templateType->where('id', (int)$request->templateType)->update($request->all());
+        $templateType->update($request->all());
 
-        return $this->response->item($templateType->find((int)$request->templateType), new TemplateTypeTransformer())
+        return $this->response->item($templateType, new TemplateTypeTransformer())
             ->setStatusCode(201);
     }
 
     public function destroy(Request $request, TemplateType $templateType)
     {
-        $templateType->where('id', (int)$request->templateType)->delete();
+        $templateType->delete();
 
         return $this->response->noContent();
     }
@@ -43,6 +43,6 @@ class TemplateTypeController extends Controller
 
     public function show(Request $request, TemplateType $templateType)
     {
-        return $this->response->item($templateType->findOrFail((int)$request->templateType), new TemplateTypeTransformer());
+        return $this->response->item($templateType, new TemplateTypeTransformer());
     }
 }

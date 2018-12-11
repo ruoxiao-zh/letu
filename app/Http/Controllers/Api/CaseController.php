@@ -20,15 +20,15 @@ class CaseController extends Controller
 
     public function update(CaseRequest $request, WxCase $case)
     {
-        $case->where('id', (int)$request->case)->update($request->all());
+        $case->update($request->all());
 
-        return $this->response->item($case->find((int)$request->case), new CaseTransformer())
+        return $this->response->item($case, new CaseTransformer())
             ->setStatusCode(201);
     }
 
     public function destroy(Request $request, WxCase $case)
     {
-        $case->where('id', (int)$request->case)->delete();
+        $case->delete();
 
         return $this->response->noContent();
     }
@@ -43,6 +43,6 @@ class CaseController extends Controller
 
     public function show(Request $request, WxCase $case)
     {
-        return $this->response->item($case->findOrFail((int)$request->case), new CaseTransformer());
+        return $this->response->item($case, new CaseTransformer());
     }
 }
