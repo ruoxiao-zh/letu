@@ -19,7 +19,6 @@ $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
     'middleware' => [
         'serializer:array',
-        // 路由模型绑定
         'bindings',
         'cors'
     ]
@@ -117,6 +116,11 @@ $api->version('v1', [
             // 代理商注册短信验证码
             $api->post('agents/verification-code', 'AgentController@sendMessage')
                 ->name('api.agents.verificationCodes.store');
+
+            /**
+             * 模板管理
+             */
+            // @todo...
 
             /**
              * 公共接口

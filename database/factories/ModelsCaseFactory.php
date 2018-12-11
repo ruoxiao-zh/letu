@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Case::class, function (Faker $faker) {
+$factory->define(App\Models\WXCase::class, function (Faker $faker) {
     return [
         //
     ];
